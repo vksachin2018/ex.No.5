@@ -1,5 +1,5 @@
-# Ex05 Image Carousel
-## Date:
+# MWAD_EX05_image-carousel-in-react
+## Date:07.05.2025
 
 ## AIM
 To create a Image Carousel using React 
@@ -39,9 +39,100 @@ Use setInterval to call the nextImage() function at regular intervals.
 Clean up the interval when the component unmounts using clearInterval to prevent memory leaks.
 
 ## PROGRAM
+ImageCarousel.jsx
+```
+import React, { useState, useEffect } from 'react';
+import VK from './assets/VK.png';
+import MK from './assets/MK.png';
 
+const ImageCarousel = () => {
+  const images = [VK, MK];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(nextImage, 3000);
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [currentIndex]);
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '20px' }}>
+      <h3>Image Carousel</h3>
+      <img
+        src={images[currentIndex]}
+        alt={`carousel-${currentIndex}`}
+        width="400"
+        height="200"
+        style={{ borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}
+      />
+      <div style={{ marginTop: '12px' }}>
+        <button
+          onClick={prevImage}
+          style={{
+            padding: '8px 16px',
+            fontSize: '14px',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Previous
+        </button>
+        <button
+          onClick={nextImage}
+          style={{
+            marginLeft: '10px',
+            padding: '8px 16px',
+            fontSize: '14px',
+            backgroundColor: '#2196F3',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer'
+          }}
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default ImageCarousel;
+
+```
+App.jsx
+```
+import React from 'react';
+import './App.css';
+import ImageCarousel from './ImageCarousel';
+
+function App() {
+  return (
+    <div className="App">
+      <h1>React Image Carousel</h1>
+      <ImageCarousel />
+    </div>
+  );
+}
+
+export default App;
+```
 
 ## OUTPUT
+![image](https://github.com/user-attachments/assets/a8a43f7a-ac29-4993-8ce5-f27c4ce1ae60)
+![image](https://github.com/user-attachments/assets/29ac0fbf-3575-4057-b496-d649f534a82a)
+
+
 
 
 ## RESULT
